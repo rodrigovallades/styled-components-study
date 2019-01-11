@@ -4,22 +4,22 @@ import styled from 'styled-components';
 class App extends Component {
 
 	render() {
-		// The Button from the last section without the interpolations
-		const Button = styled.button`
+		// Custom component
+		const Link = ({ className, children }) => (
+			<a className={className} href="/">
+				{children}
+			</a>
+		)
+
+		const StyledLink = styled(Link)`
 			color: palevioletred;
-			font-size: 1em;
-			margin: 1em;
-			padding: 0.25em 1em;
-			border: 2px solid palevioletred;
-			border-radius: 3px;
-		`;
-
-		const ReversedButton = props => <a {...props} children={props.children.split('').reverse()} />
-
+			font-weight: bold;
+		`
 		return (
 			<React.Fragment>
-				<Button>Normal button</Button>
-				<Button as={ReversedButton} href="http://www.amaro.com">Custom Button with Normal Button styles</Button>
+				<Link>Unstyled, boring link</Link>
+				<br />
+				<StyledLink>Styled, cool link</StyledLink>
 			</React.Fragment>
 		);
 	}
