@@ -14,17 +14,12 @@ class App extends Component {
 			border-radius: 3px;
 		`;
 
-		// A new component based on Button, but with some override styles
-		const TomatoButton = styled(Button)`
-			color: tomato;
-			border-color: tomato;
-		`;
+		const ReversedButton = props => <a {...props} children={props.children.split('').reverse()} />
 
 		return (
 			<React.Fragment>
 				<Button>Normal button</Button>
-				<Button as="a" href="/">Link with Button styles</Button>
-				<TomatoButton as="a" href="/">Link with Tomato Button styles</TomatoButton>
+				<Button as={ReversedButton} href="http://www.amaro.com">Custom Button with Normal Button styles</Button>
 			</React.Fragment>
 		);
 	}
