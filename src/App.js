@@ -23,7 +23,8 @@ class App extends Component {
 		return (
 			<React.Fragment>
 				<Button>Normal button</Button>
-				<TomatoButton>Tomato button</TomatoButton>
+				<Button as="a" href="/">Link with Button styles</Button>
+				<TomatoButton as="a" href="/">Link with Tomato Button styles</TomatoButton>
 			</React.Fragment>
 		);
 	}
