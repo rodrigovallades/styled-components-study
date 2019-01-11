@@ -4,11 +4,9 @@ import styled from 'styled-components';
 class App extends Component {
 
 	render() {
+		// The Button from the last section without the interpolations
 		const Button = styled.button`
-			/* Adapt the colors based on primary prop */
-			background: ${props => props.primary ? "palevioletred" : "white"};
-			color: ${props => props.primary ? "white" : "palevioletred"};
-
+			color: palevioletred;
 			font-size: 1em;
 			margin: 1em;
 			padding: 0.25em 1em;
@@ -16,10 +14,16 @@ class App extends Component {
 			border-radius: 3px;
 		`;
 
+		// A new component based on Button, but with some override styles
+		const TomatoButton = styled(Button)`
+			color: tomato;
+			border-color: tomato;
+		`;
+
 		return (
 			<React.Fragment>
-				<Button>Normal</Button>
-				<Button primary>Primary</Button>
+				<Button>Normal button</Button>
+				<TomatoButton>Tomato button</TomatoButton>
 			</React.Fragment>
 		);
 	}
