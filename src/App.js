@@ -10,12 +10,12 @@ const sizes = {
 const theme = {
 	primary: '#00aaaa',
 	secondary: '#f04',
-	tertiary: 'yellow'
+	tertiary: 'yellow',
 }
 
 const themeB = {
 	...theme,
-	primary: 'maroon'
+	primary: 'maroon',
 }
 
 const getThemeProp = (key) => (props) => props.theme[key];
@@ -33,15 +33,33 @@ const Content = styled.div`
 	transition: width 0.3s linear;
 	width: 3em;
 	will-change: width;
+	text-align: center;
+	display: flex;
+	color: white;
+	justify-content: center;
+	align-items: center;
+
+	::before {
+		content: '1';
+	}
 
 	${media.tablet} {
 		background-color: ${getThemeProp('secondary')};
 		width: 6rem;
+
+		::before {
+			content: '2';
+		}
 	}
 
 	${media.desktop} {
 		background-color: ${getThemeProp('tertiary')};
+		color: black;
 		width: 12rem;
+
+		::before {
+			content: '3';
+		}
 	}
 
 
