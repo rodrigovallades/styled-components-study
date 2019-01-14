@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 
 const sizes = {
   desktop: 992,
@@ -7,34 +7,54 @@ const sizes = {
   phone: 576,
 }
 
-// Iterate through the sizes and create a media template
-const media = Object.keys(sizes).reduce((acc, label) => {
-  acc[label] = (...args) => css`
-    @media (max-width: ${sizes[label]}px) {
-      ${css(...args)}
-    }
-	`
-	console.log(acc);
+const theme = {
+	primary: '#00aaaa',
+	secondary: '#f04',
+	tertiary: 'yellow'
+}
 
-  return acc
-}, {})
+const themeB = {
+	...theme,
+	primary: 'maroon'
+}
+
+const getThemeProp = (key) => (props) => props.theme[key];
+
+// Iterate through the sizes and create a media template
+const media = Object.keys(sizes).reduce((acc, d) => {
+  acc[d] = `@media (min-width: ${sizes[d]}px)`;
+
+  return acc;
+}, {});
 
 const Content = styled.div`
-  height: 3em;
-  width: 3em;
-  background: papayawhip;
+	background: ${props => props.theme.primary};
+	height: 3em;
+	transition: width 0.3s linear;
+	width: 3em;
+	will-change: width;
+
+	${media.tablet} {
+		background-color: ${getThemeProp('secondary')};
+		width: 6rem;
+	}
+
+	${media.desktop} {
+		background-color: ${getThemeProp('tertiary')};
+		width: 12rem;
+	}
+
 
   /* Now we have our methods on media and can use them instead of raw queries */
-  ${media.desktop`background: dodgerblue;`}
-  ${media.tablet`background: mediumseagreen;`}
-  ${media.phone`background: palevioletred;`}
 `;
 
 class App extends Component {
 
   render() {
     return (
-			<Content />
+			<ThemeProvider theme={themeB}>
+				<Content />
+			</ThemeProvider>
     )
   }
 }
