@@ -1,42 +1,40 @@
 import React, { Component } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { css } from 'styled-components';
 
-// Define our button, but with the use of props.theme this time
-const Button = styled.button`
-  color: ${props => props.theme.fg};
-  border: 2px solid ${props => props.theme.fg};
-  background: ${props => props.theme.bg};
+const sizes = {
+  desktop: 992,
+  tablet: 768,
+  phone: 576,
+}
 
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
+// Iterate through the sizes and create a media template
+const media = Object.keys(sizes).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (max-width: ${sizes[label]}px) {
+      ${css(...args)}
+    }
+	`
+	console.log(acc);
+
+  return acc
+}, {})
+
+const Content = styled.div`
+  height: 3em;
+  width: 3em;
+  background: papayawhip;
+
+  /* Now we have our methods on media and can use them instead of raw queries */
+  ${media.desktop`background: dodgerblue;`}
+  ${media.tablet`background: mediumseagreen;`}
+  ${media.phone`background: palevioletred;`}
 `;
-
-// Define our `fg` and `bg` on the theme
-const theme = {
-  fg: "palevioletred",
-  bg: "white"
-};
-
-// This theme swaps `fg` and `bg`
-const invertTheme = ({ fg, bg }) => ({
-  fg: bg,
-  bg: fg
-});
 
 class App extends Component {
 
   render() {
     return (
-			<ThemeProvider theme={theme}>
-				<React.Fragment>
-					<Button>Default Theme</Button>
-					<ThemeProvider theme={invertTheme}>
-						<Button>Inverted Theme</Button>
-					</ThemeProvider>
-				</React.Fragment>
-			</ThemeProvider>
+			<Content />
     )
   }
 }
