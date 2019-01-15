@@ -1,77 +1,46 @@
 import React, { Component } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
-
-const sizes = {
-  desktop: 992,
-  tablet: 768,
-  phone: 576,
-}
+import styled, { ThemeProvider } from 'styled-components';
+import { color, width } from 'styled-system';
 
 const theme = {
-	primary: '#00aaaa',
-	secondary: '#f04',
-	tertiary: 'yellow',
-}
-
-const themeB = {
-	...theme,
-	primary: 'maroon',
-}
-
-const getThemeProp = (key) => (props) => props.theme[key];
-
-// Iterate through the sizes and create a media template
-const media = Object.keys(sizes).reduce((acc, d) => {
-  acc[d] = `@media (min-width: ${sizes[d]}px)`;
-
-  return acc;
-}, {});
+	colors: {
+		primary: '#00aaaa',
+		secondary: '#f04',
+		tertiary: 'yellow',
+	},
+	breakpoints: {
+		sm: 0,
+		md: 480,
+		lg: 768,
+	}
+};
 
 const Content = styled.div`
-	background: ${props => props.theme.primary};
+	${color}
+	${width}
 	height: 3em;
 	transition: width 0.3s linear;
-	width: 3em;
 	will-change: width;
 	text-align: center;
 	display: flex;
-	color: white;
 	justify-content: center;
 	align-items: center;
 
 	::before {
 		content: '1';
 	}
-
-	${media.tablet} {
-		background-color: ${getThemeProp('secondary')};
-		width: 6rem;
-
-		::before {
-			content: '2';
-		}
-	}
-
-	${media.desktop} {
-		background-color: ${getThemeProp('tertiary')};
-		color: black;
-		width: 12rem;
-
-		::before {
-			content: '3';
-		}
-	}
-
-
-  /* Now we have our methods on media and can use them instead of raw queries */
 `;
 
 class App extends Component {
 
   render() {
     return (
-			<ThemeProvider theme={themeB}>
-				<Content />
+			<ThemeProvider theme={theme}>
+				<React.Fragment>
+					<Content bg={{ sm: 'secondary', md: 'tertiary', lg: 'primary' }} width={{ sm: '3rem', md: '6rem', lg: '12rem' }}/>
+					<Content bg={{ sm: 'tertiary', md: 'primary', lg: 'secondary' }} width={{ sm: '3rem', md: '6rem', lg: '12rem' }}/>
+					<Content bg={{ sm: 'primary', md: 'secondary', lg: 'tertiary' }} width={{ sm: '3rem', md: '6rem', lg: '12rem' }}/>
+				</React.Fragment>
 			</ThemeProvider>
     )
   }
